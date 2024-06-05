@@ -16,7 +16,7 @@ class DrawerQueryElements extends StatelessWidget {
             title: Text("Ana Sayfa"),
             trailing: Icon(Icons.arrow_right),
             onTap: (){
-              Navigator.pushNamed(context, "/homepage");
+              Navigator.pushNamed(context, "/homepage",arguments: "Ana Sayfa");
             },
           ),
           //Kişi Sorgu
@@ -25,7 +25,7 @@ class DrawerQueryElements extends StatelessWidget {
             title: Text("Kişi Sorgu"),
             trailing: Icon(Icons.arrow_right),
             onTap: (){
-              Navigator.pushNamed(context, "/person_page");
+              Navigator.pushNamed(context, "/person_page",arguments: "Kişi Sorgu");
             },
           ),
           //Aile Sorgu
@@ -34,7 +34,7 @@ class DrawerQueryElements extends StatelessWidget {
             title: Text("Aile Sorgu"),
             trailing: Icon(Icons.arrow_right),
             onTap: (){
-              Navigator.pushNamed(context, "/family_page");
+              Navigator.pushNamed(context, "/family_page",arguments: "Aile Sorgu");
             },
           ),
           //Adres Sorgu
@@ -43,7 +43,7 @@ class DrawerQueryElements extends StatelessWidget {
             title: Text("Adres Sorgu"),
             trailing: Icon(Icons.arrow_right),
             onTap: (){
-              Navigator.pushNamed(context, "/address_page");
+              Navigator.pushNamed(context, "/address_page",arguments: "Adres Sorgu");
             },
           ),
           //Telefon Sorgu
@@ -52,7 +52,7 @@ class DrawerQueryElements extends StatelessWidget {
             title: Text("Telefon Sorgu"),
             trailing: Icon(Icons.arrow_right),
             onTap: (){
-              Navigator.pushNamed(context, "/phone_page");
+              Navigator.pushNamed(context, "/phone_page",arguments: "Telefon Sorgu");
             },
           ),
           //Okul Sorgu
@@ -61,7 +61,7 @@ class DrawerQueryElements extends StatelessWidget {
             title: Text("Okul Sorgu"),
             trailing: Icon(Icons.arrow_right),
             onTap: (){
-              Navigator.pushNamed(context, "/school_page");
+              Navigator.pushNamed(context, "/school_page",arguments: "Okul Sorgu");
             },
           ),
           //Okul Sorgu
@@ -70,7 +70,7 @@ class DrawerQueryElements extends StatelessWidget {
             title: Text("İban Sorgu"),
             trailing: Icon(Icons.arrow_right),
             onTap: (){
-              Navigator.pushNamed(context, "/iban_page");
+              Navigator.pushNamed(context, "/iban_page",arguments: "İban Sorgu");
             },
           ),
           //İp Sorgu
@@ -79,7 +79,7 @@ class DrawerQueryElements extends StatelessWidget {
             title: Text("İp Sorgu"),
             trailing: Icon(Icons.arrow_right),
             onTap: (){
-              Navigator.pushNamed(context, "/ip_page");
+              Navigator.pushNamed(context, "/ip_page",arguments: "İp Sorgu");
             },
           ),
         ],

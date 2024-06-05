@@ -7,4 +7,5 @@ class AllStrings{
     String register = "Kayıt ol";
     String or = "ya da";
     String admin = "Admin";
+    String query = "Sorgula";
 }

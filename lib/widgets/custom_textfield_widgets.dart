@@ -27,6 +27,7 @@ class CustomTextFieldWidgets extends StatelessWidget {
       controller: controller,
       decoration: InputDecoration(
         border: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.pinkAccent, width: 2),
           borderRadius: BorderRadius.circular(16),
         ),
         disabledBorder: OutlineInputBorder(
@@ -37,6 +38,10 @@ class CustomTextFieldWidgets extends StatelessWidget {
           borderSide: BorderSide(color: Colors.teal, width: 2),
           borderRadius: BorderRadius.circular(16),
         ),
+        enabledBorder:OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.pinkAccent, width: 2),
+          borderRadius: BorderRadius.circular(16),
+        ) ,
         labelText: hint_text,
         prefixIcon: prefix_icon,
       ),
