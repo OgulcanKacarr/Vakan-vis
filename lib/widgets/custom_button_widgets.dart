@@ -14,9 +14,8 @@ class CustomButtonWidgets extends StatelessWidget {
       onPressed: function,
       child: text,
       style: ElevatedButton.styleFrom(
-          elevation: 10,
-          foregroundColor:Colors.white,
-          backgroundColor: Colors.redAccent,
+          foregroundColor: Colors.white, elevation: 10,
+          backgroundColor: Colors.teal,
           shape: StadiumBorder(),
       ),
 

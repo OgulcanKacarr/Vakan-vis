@@ -17,6 +17,8 @@ class LoginPage extends ConsumerStatefulWidget {
 
 class _LoginPageState extends ConsumerState<LoginPage> {
   AllStrings strings = AllStrings();
+  TextEditingController email_controller = TextEditingController();
+  TextEditingController password_controller = TextEditingController();
 
 
   @override
@@ -53,6 +55,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       hint_text: strings.user_email,
                       prefix_icon: Icon(Icons.email),
                       keyboard_type: TextInputType.emailAddress,
+                      controller: email_controller,
                     ),
                     SizedBox(
                       height: 10,
@@ -62,15 +65,21 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       prefix_icon: Icon(Icons.lock),
                       keyboard_type: TextInputType.text,
                       isPassword: true,
+                      controller: password_controller,
                     ),
                     SizedBox(
                       height: 10,
                     ),
                     CustomButtonWidgets(
-                        function: () {},
+                        function: () {
+                          String email = email_controller.text;
+                          String password = password_controller.text;
+                          watch.checkLoginInfo(context, email, password);
+                        },
                         text: CustomTextWidgets(
                           text: strings.enter,
                           text_size: 15,
+                          text_color: Colors.white,
                         )),
                     SizedBox(
                       height: 10,

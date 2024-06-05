@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "581984139966",
+    "project_id": "f-flutter-vakanuvis",
+    "storage_bucket": "f-flutter-vakanuvis.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:581984139966:android:5f2585ce5c10b21e9a7cef",
+        "android_client_info": {
+          "package_name": "com.ogulcankacar.vakanuvis"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDCbIatckAFYkziLAJJjrccuEgwcxZGKB8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

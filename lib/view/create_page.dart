@@ -21,6 +21,10 @@ class CreatePage extends ConsumerStatefulWidget {
 class _CreatePageState extends ConsumerState<CreatePage> {
   AllStrings strings = AllStrings();
 
+  TextEditingController email_controller = TextEditingController();
+  TextEditingController password_controller = TextEditingController();
+  TextEditingController re_password_controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     double device_with = MediaQuery.of(context).size.width;
@@ -54,6 +58,7 @@ class _CreatePageState extends ConsumerState<CreatePage> {
                           hint_text: strings.user_email,
                           prefix_icon: Icon(Icons.email),
                           keyboard_type: TextInputType.emailAddress,
+                          controller: email_controller,
                         ),
                         SizedBox(
                           height: 10,
@@ -63,6 +68,7 @@ class _CreatePageState extends ConsumerState<CreatePage> {
                           prefix_icon: Icon(Icons.lock),
                           keyboard_type: TextInputType.text,
                           isPassword: true,
+                          controller: password_controller,
                         ),
                         SizedBox(
                           height: 10,
@@ -72,15 +78,22 @@ class _CreatePageState extends ConsumerState<CreatePage> {
                           prefix_icon: Icon(Icons.lock),
                           keyboard_type: TextInputType.text,
                           isPassword: true,
+                          controller: re_password_controller,
                         ),
                         SizedBox(
                           height: 10,
                         ),
                         CustomButtonWidgets(
-                            function: () {},
+                            function: () {
+                              String email = email_controller.text;
+                              String password = password_controller.text;
+                              String re_password = re_password_controller.text;
+                              watch.checkCreateInfo(context, email, password, re_password);
+                            },
                             text: CustomTextWidgets(
                               text: strings.register,
                               text_size: 15,
+                              text_color: Colors.white,
                             )),
                         SizedBox(
                           height: 10,

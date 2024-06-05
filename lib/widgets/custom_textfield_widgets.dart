@@ -8,13 +8,15 @@ class CustomTextFieldWidgets extends StatelessWidget {
   Icon prefix_icon;
   TextInputType keyboard_type;
   bool isPassword;
+  TextEditingController controller;
 
 
   CustomTextFieldWidgets({
     required this.hint_text,
     required this.prefix_icon,
     required this.keyboard_type,
-    this.isPassword = false
+    this.isPassword = false,
+    required this.controller
   });
 
   @override
@@ -22,6 +24,7 @@ class CustomTextFieldWidgets extends StatelessWidget {
     return TextField(
       keyboardType: keyboard_type,
       obscureText: isPassword,
+      controller: controller,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
