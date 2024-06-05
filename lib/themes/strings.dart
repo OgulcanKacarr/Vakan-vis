@@ -6,4 +6,5 @@ class AllStrings{
     String enter = "Giriş yap";
     String register = "Kayıt ol";
     String or = "ya da";
+    String admin = "Admin";
 }

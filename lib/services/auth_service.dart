@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class AuthService extends ChangeNotifier{
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+
   //Kullanıcı oluştur
   Future<String> createUserWithEmailAndPassword(BuildContext context, String email, String password) async{
     showProgressDialog(context);
@@ -77,6 +78,28 @@ class AuthService extends ChangeNotifier{
     Navigator.pop(context);
     return status;
 
+  }
+
+  //Kullanıcı giriş kontrolü
+  Future<bool> checkCurrentUser() async{
+    bool isOnline = false;
+    User? current_user = await _auth.currentUser;
+    if(current_user != null){
+      isOnline = true;
+    }else{
+      isOnline = false;
+    }
+    return isOnline;
+  }
+
+
+  void logoutUser(BuildContext context) {
+    _auth.signOut().then((value) {
+      showProgressDialog(context);
+      Navigator.pushReplacementNamed(context, "/loginpage");
+    }).catchError((error) {
+
+    });
   }
 
 

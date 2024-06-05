@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:vakanuvis/services/auth_service.dart';
 import 'package:vakanuvis/themes/strings.dart';
 import 'package:vakanuvis/view_model/login_page_viewmodel.dart';
 import 'package:vakanuvis/widgets/custom_button_widgets.dart';
@@ -17,14 +18,21 @@ class LoginPage extends ConsumerStatefulWidget {
 
 class _LoginPageState extends ConsumerState<LoginPage> {
   AllStrings strings = AllStrings();
+
   TextEditingController email_controller = TextEditingController();
   TextEditingController password_controller = TextEditingController();
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.watch(riverpod).checkCurrentUser(context);
+    });
+    super.initState();
+  }
 
 
   @override
   Widget build(BuildContext context) {
-
-
     double device_with = MediaQuery.of(context).size.width;
     double device_heiht = MediaQuery.of(context).size.height;
     return Scaffold(
