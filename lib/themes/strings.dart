@@ -8,4 +8,5 @@ class AllStrings{
     String or = "ya da";
     String admin = "Admin";
     String query = "Sorgula";
+    String host = "Host";
 }

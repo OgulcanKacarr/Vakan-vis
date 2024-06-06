@@ -6,7 +6,7 @@ class ThemeClass {
     primaryColor: Colors.grey[900],
     hintColor: Colors.white,
     buttonTheme: ButtonThemeData(
-      buttonColor: Colors.grey[800], // Dark theme button color
+      buttonColor: Colors.white, // Dark theme button color
       textTheme: ButtonTextTheme.primary,
     ),
     textTheme: TextTheme(

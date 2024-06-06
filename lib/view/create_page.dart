@@ -55,7 +55,7 @@ class _CreatePageState extends ConsumerState<CreatePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         CustomTextFieldWidgets(
-                          hint_text: strings.user_email,
+                          text: strings.user_email,
                           prefix_icon: Icon(Icons.email),
                           keyboard_type: TextInputType.emailAddress,
                           controller: email_controller,
@@ -64,7 +64,7 @@ class _CreatePageState extends ConsumerState<CreatePage> {
                           height: 10,
                         ),
                         CustomTextFieldWidgets(
-                          hint_text: strings.user_password,
+                          text: strings.user_password,
                           prefix_icon: Icon(Icons.lock),
                           keyboard_type: TextInputType.text,
                           isPassword: true,
@@ -74,7 +74,7 @@ class _CreatePageState extends ConsumerState<CreatePage> {
                           height: 10,
                         ),
                         CustomTextFieldWidgets(
-                          hint_text: strings.user_password_retry,
+                          text: strings.user_password_retry,
                           prefix_icon: Icon(Icons.lock),
                           keyboard_type: TextInputType.text,
                           isPassword: true,
