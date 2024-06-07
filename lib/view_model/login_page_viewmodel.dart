@@ -30,15 +30,6 @@ class LoginPageViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void checkCurrentUser(BuildContext context) async {
-    bool isOnline = await authService.checkCurrentUser();
-    if (isOnline) {
-      Navigator.pushReplacementNamed(context, "/homepage");
-    }else{
-      Navigator.pushReplacementNamed(context, "/loginpage");
-    }
-    notifyListeners();
-  }
 
   void showSnackBar(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(

@@ -18,32 +18,37 @@ class LoginPage extends ConsumerStatefulWidget {
 
 class _LoginPageState extends ConsumerState<LoginPage> {
   AllStrings strings = AllStrings();
+  AuthService service = AuthService();
 
   TextEditingController email_controller = TextEditingController();
   TextEditingController password_controller = TextEditingController();
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.watch(riverpod).checkCurrentUser(context);
-    });
     super.initState();
+    service.checkCurrentUser().then((isOnline) {
+      if (isOnline) {
+        Navigator.pushReplacementNamed(context, "/homepage");
+      } else {
+        // Kullanıcı offline ise yapılacak işlemler
+        print("giriş yok");
+      }
+    });
   }
-
 
   @override
   Widget build(BuildContext context) {
     double device_with = MediaQuery.of(context).size.width;
     double device_heiht = MediaQuery.of(context).size.height;
+    var watch = ref.watch(riverpod);
+    var read = ref.read(riverpod);
     return Scaffold(
       backgroundColor: Colors.black,
-      body: _buildBody(context, device_with, device_heiht),
+      body: _buildBody(context, device_with, device_heiht,watch),
     );
   }
 
-  Widget _buildBody(BuildContext context, double device_with, double device_heiht) {
-    var watch = ref.watch(riverpod);
-    var read = ref.read(riverpod);
+  Widget _buildBody(BuildContext context, double device_with, double device_heiht, var watch) {
     return SafeArea(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

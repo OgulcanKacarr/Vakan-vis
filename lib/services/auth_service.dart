@@ -80,25 +80,18 @@ class AuthService extends ChangeNotifier{
 
   }
 
-  //Kullanıcı giriş kontrolü
-  Future<bool> checkCurrentUser() async{
-    bool isOnline = false;
-    User? current_user = await _auth.currentUser;
-    if(current_user != null){
-      isOnline = true;
-    }else{
-      isOnline = false;
-    }
-    return isOnline;
+
+  Future<bool> checkCurrentUser() async {
+    User? current_user = _auth.currentUser;
+    return current_user != null;
   }
 
-
   void logoutUser(BuildContext context) {
-    _auth.signOut().then((value) {
-      showProgressDialog(context);
+    _auth.signOut().then((_) {
+      //showProgressDialog(context);
       Navigator.pushReplacementNamed(context, "/loginpage");
     }).catchError((error) {
-
+      // Error handling
     });
   }
 

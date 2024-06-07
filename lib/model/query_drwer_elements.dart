@@ -19,6 +19,16 @@ class DrawerQueryElements extends StatelessWidget {
               Navigator.pushNamed(context, "/homepage",arguments: "Ana Sayfa");
             },
           ),
+
+          //Full Sorgu
+          ListTile(
+            leading: Icon(Icons.person),
+            title: Text("Full Sorgu"),
+            trailing: Icon(Icons.arrow_right),
+            onTap: (){
+              Navigator.pushNamed(context, "/full_page",arguments: "Full Sorgu");
+            },
+          ),
           //Kişi Sorgu
           ListTile(
             leading: Icon(Icons.person),
