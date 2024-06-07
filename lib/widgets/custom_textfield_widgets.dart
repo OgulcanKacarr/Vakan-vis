@@ -27,29 +27,29 @@ class CustomTextFieldWidgets extends StatelessWidget {
       keyboardType: keyboard_type,
       obscureText: isPassword,
       controller: controller,
-      style: TextStyle(color: Colors.pinkAccent),
+      style: const TextStyle(color: Colors.pinkAccent),
       decoration: InputDecoration(
         border: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.pinkAccent, width: 2),
+          borderSide: const BorderSide(color: Colors.pinkAccent, width: 2),
           borderRadius: BorderRadius.circular(16),
         ),
         disabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey, width: 2),
+          borderSide: const BorderSide(color: Colors.grey, width: 2),
           borderRadius: BorderRadius.circular(16),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.teal, width: 2),
+          borderSide: const BorderSide(color: Colors.teal, width: 2),
           borderRadius: BorderRadius.circular(16),
         ),
         enabledBorder:OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.pinkAccent, width: 2),
+          borderSide: const BorderSide(color: Colors.pinkAccent, width: 2),
           borderRadius: BorderRadius.circular(16),
         ) ,
         labelText: text,
         hintText: hint_text,
         prefixIcon: prefix_icon,
-        hintStyle: TextStyle(color: Colors.purple),
-        labelStyle: TextStyle(color: Colors.white),
+        hintStyle: const TextStyle(color: Colors.purple),
+        labelStyle: const TextStyle(color: Colors.grey),
       ),
     );
   }

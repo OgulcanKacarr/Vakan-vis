@@ -4,39 +4,39 @@ import 'package:vakanuvis/themes/strings.dart';
 import 'package:vakanuvis/view_model/full_query_page_viewmodel.dart';
 import 'package:vakanuvis/widgets/custom_appbar_widgets.dart';
 import 'package:vakanuvis/widgets/custom_button_widgets.dart';
+import 'package:vakanuvis/widgets/custom_show_info_container_widgets.dart';
 import 'package:vakanuvis/widgets/custom_textfield_widgets.dart';
 
 final riverpod = ChangeNotifierProvider((ref) => FullQueryPageViewmodel());
 
 class FullQueryPage extends ConsumerStatefulWidget {
-  const FullQueryPage({Key? key}) : super(key: key);
+  const FullQueryPage({super.key});
 
   @override
   ConsumerState<FullQueryPage> createState() => _FullQueryPageState();
 }
 
 class _FullQueryPageState extends ConsumerState<FullQueryPage> {
-  final List<String> elements = ["Iban"];
-  final List<IconData> icons = [Icons.food_bank];
-  final List<TextEditingController> controllers = List.generate(8, (_) => TextEditingController());
-
+  final List<String> elements = ["TC"];
+  final List<IconData> icons = [Icons.perm_identity_outlined];
+  final List<TextEditingController> controllers = List.generate(1, (_) => TextEditingController());
   @override
   Widget build(BuildContext context) {
-    AllStrings strings = AllStrings();
+    AllStrings _strings = AllStrings();
     final String? title = ModalRoute.of(context)?.settings.arguments as String?;
     var watch = ref.watch(riverpod);
 
     return Scaffold(
       appBar: CustomAppBarWidgets(
-        title: title ?? strings.vakanuvis,
+        title: title ?? _strings.vakanuvis,
         isBack: true,
         isCenter: true,
       ),
-      body: _buildBody(watch),
+      body: _buildBody(watch,_strings),
     );
   }
 
-  Widget _buildBody(FullQueryPageViewmodel watch) {
+  Widget _buildBody(FullQueryPageViewmodel watch, AllStrings strings) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: ListView(
@@ -48,41 +48,41 @@ class _FullQueryPageState extends ConsumerState<FullQueryPage> {
               prefix_icon: Icon(icons[i]),
               keyboard_type: TextInputType.text,
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
           ],
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           CustomButtonWidgets(
-            text: Text("Sorgula"),
+            text: Text(strings.query),
             function: () {
               watch.getDataForFullQuery(controllers, context);
             },
           ),
           if (watch.isLoading)
-            Center(
+            const Center(
               child: CircularProgressIndicator(),
             ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           if (watch.responseData.isNotEmpty)
-            ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: watch.responseData.length,
-              itemBuilder: (context, index) {
-                var data = watch.responseData[index];
-                return ListTile(
-                  leading: Icon(Icons.person),
-                  title: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('${data['text'] ?? ''}'),
-                    ],
-                  ),
-                );
-              },
-            ),
-          if (watch.responseData == null || watch.responseData!.isEmpty)
-            Center(
-              child: Text('Henüz veri yok.'),
+            CustomShowInfoContainerWidgets(
+              widget: ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: watch.responseData.length,
+                itemBuilder: (context, index) {
+                  var data = watch.responseData[index];
+                  return ListTile(
+                    leading: const Icon(Icons.person),
+                    title: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SelectableText(
+                          '${data['text'] ?? ''}',
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
             ),
         ],
       ),

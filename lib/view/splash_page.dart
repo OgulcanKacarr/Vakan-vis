@@ -11,7 +11,7 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage> {
   CustomColors customColors = CustomColors();
-  AllStrings strings = AllStrings();
+  AllStrings _strings = AllStrings();
 
   @override
   void initState() {
@@ -38,7 +38,7 @@ class _SplashPageState extends State<SplashPage> {
           flex: 2,
           child: Center(
             child: Image.asset(
-              "assets/images/dragon_logo.png",
+              _strings.logo,
               width: 200,
               height: 200,
             ),
@@ -48,7 +48,7 @@ class _SplashPageState extends State<SplashPage> {
           flex: 1,
           child: Center(
             child: CustomTextWidgets(
-              text: strings.vakanuvis,
+              text: _strings.vakanuvis,
               text_color: customColors.turkuaz,
             ),
           ),

@@ -7,24 +7,23 @@ import 'package:vakanuvis/model/query_drwer_elements.dart';
 import 'package:vakanuvis/services/shared_pref.dart';
 import 'package:vakanuvis/themes/strings.dart';
 import 'package:vakanuvis/view_model/home_page_viewmodel.dart';
-import 'package:vakanuvis/view_model/login_page_viewmodel.dart';
 import 'package:vakanuvis/widgets/custom_appbar_widgets.dart';
 import 'package:vakanuvis/widgets/custom_button_widgets.dart';
 import '../widgets/custom_textfield_widgets.dart';
 
 final riverpod = ChangeNotifierProvider((ref) => HomePageViewmodel());
-
 class HomePage extends ConsumerStatefulWidget {
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _HomePageState();
 }
 
 class _HomePageState extends ConsumerState<HomePage> {
-  AllStrings strings = AllStrings();
-  String host = "";
-  SharedPrefs sharedPrefs = SharedPrefs();
-  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-  TextEditingController controller = TextEditingController();
+  AllStrings _strings = AllStrings();
+  String _host =  "";
+  SharedPrefs _sharedPrefs = SharedPrefs();
+  FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  TextEditingController _controller = TextEditingController();
+
 
   @override
   void initState() {
@@ -33,11 +32,12 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 
   Future<void> _loadHost() async {
-    host = (await sharedPrefs.read("host")) ?? "";
-    if (host.isEmpty) {
-      host = "Host girin";
+    _host = (await _sharedPrefs.read("host")) ?? "";
+    if (_host.isEmpty) {
+      _host = _strings.host;
+    }else{
+      _controller.text = _host; //
     }
-    controller.text = host; // TextField'i başlatırken host değerini ayarla
     setState(() {});
   }
 
@@ -45,17 +45,16 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget build(BuildContext context) {
     var watch = ref.watch(riverpod);
     var read = ref.read(riverpod);
-
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: CustomAppBarWidgets(
-        title: strings.vakanuvis,
+        title: _strings.vakanuvis,
         isCenter: true,
         isBack: true,
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {
-          return _buildBody(context, constraints);
+          return _buildBody(context, constraints,watch);
         },
       ),
       drawer: DrawerQueryElements(),
@@ -63,7 +62,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         onPressed: () {
           watch.showAlertDialog(context);
         },
-        child: Icon(
+        child: const Icon(
           Icons.add,
           size: 30,
         ),
@@ -73,58 +72,66 @@ class _HomePageState extends ConsumerState<HomePage> {
     );
   }
 
-  Widget _buildBody(BuildContext context, BoxConstraints constraints) {
+  Widget _buildBody(BuildContext context, BoxConstraints constraints, var watch) {
     return ListView(
-      padding: EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8.0),
       children: [
         Container(
-          margin: EdgeInsets.only(top: 15, left: 5),
+          margin: const EdgeInsets.only(top: 15, left: 5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(children: [
-                Text(
-                  "Kullanıcı: ",
-                  style: TextStyle(color: Colors.green, fontSize: _responsiveTextSize(constraints)),
+              Row(
+                children: [
+                  Text(
+                    _strings.online_user,
+                    style: TextStyle(color: Colors.green, fontSize: _responsiveTextSize(constraints)),
+                  ),
+                  const SizedBox(width: 10),
+                  Flexible(
+                    child: Text(
+                      "${_firebaseAuth.currentUser?.email}",
+                      style: TextStyle(color: Colors.red, fontSize: _responsiveTextSize(constraints)),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 50),
+              Center(
+                child: Image.asset(
+                  _strings.logo,
+                  width: _responsiveImageSize(constraints),
+                  height: _responsiveImageSize(constraints),
                 ),
-                SizedBox(width: 10),
-                Text(
-                  "${firebaseAuth.currentUser?.email}",
-                  style: TextStyle(color: Colors.red, fontSize: _responsiveTextSize(constraints)),
-                ),
-              ],),
-              SizedBox(height: 50),
-              Center(child: Image.asset("assets/images/dragon_logo.png")),
-              SizedBox(height: 10),
+              ),
+              const SizedBox(height: 10),
               Center(
                 child: Text(
-                  "Kılıcın parlattığı, Kalemin aydınlattığı ",
+                  _strings.write,
                   style: TextStyle(color: Colors.purple, fontSize: _responsiveTextSize(constraints)),
+                  textAlign: TextAlign.center,
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               CustomTextFieldWidgets(
-                text: "Host",
-                hint_text: host,
-                prefix_icon: Icon(Icons.html),
+                text: _strings.host,
+                hint_text: _host,
+                prefix_icon: const Icon(Icons.html),
                 keyboard_type: TextInputType.text,
-                controller: controller,
+                controller: _controller,
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Center(
-                child: CustomButtonWidgets(function: (){
-                  String host = controller.text.trim();
+                child: CustomButtonWidgets(function: () {
+                  String host = _controller.text.trim();
                   if (host.isNotEmpty) {
-                    sharedPrefs.save(context, host);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text("Host kaydedildi.")),
-                    );
+                    _sharedPrefs.save(context, host);
+                    _strings.showSnackBar(context, _strings.host_save);
                   } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text("Host boş olamaz!")),
-                    );
+                    _strings.showSnackBar(context, _strings.host_not_empty);
                   }
-                }, text: Text("Kaydet")),
+                }, text: Text(_strings.save)),
               ),
             ],
           ),
@@ -141,6 +148,17 @@ class _HomePageState extends ConsumerState<HomePage> {
       return 20; // Medium screens
     } else {
       return 16; // Small screens
+    }
+  }
+
+  double _responsiveImageSize(BoxConstraints constraints) {
+    // Adjust the image size based on screen width
+    if (constraints.maxWidth > 1200) {
+      return 200; // Large screens
+    } else if (constraints.maxWidth > 800) {
+      return 150; // Medium screens
+    } else {
+      return 100; // Small screens
     }
   }
 }

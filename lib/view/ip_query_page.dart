@@ -4,6 +4,7 @@ import 'package:vakanuvis/themes/strings.dart';
 import 'package:vakanuvis/view_model/ip_query_page_viewmodel.dart';
 import 'package:vakanuvis/widgets/custom_appbar_widgets.dart';
 import 'package:vakanuvis/widgets/custom_button_widgets.dart';
+import 'package:vakanuvis/widgets/custom_show_info_container_widgets.dart';
 import 'package:vakanuvis/widgets/custom_textfield_widgets.dart';
 
 final riverpod = ChangeNotifierProvider((ref) => IpQueryPageViewmodel());
@@ -23,24 +24,24 @@ class _IpQueryPageState extends ConsumerState<IpQueryPage> {
     Icons.network_check,
   ];
   final List<TextEditingController> controllers =
-  List.generate(8, (_) => TextEditingController());
+      List.generate(8, (_) => TextEditingController());
 
   @override
   Widget build(BuildContext context) {
-    AllStrings strings = AllStrings();
+    AllStrings _strings = AllStrings();
     var watch = ref.watch(riverpod);
 
     return Scaffold(
       appBar: CustomAppBarWidgets(
-        title: strings.vakanuvis,
+        title: _strings.vakanuvis,
         isBack: true,
         isCenter: true,
       ),
-      body: _buildBody(watch),
+      body: _buildBody(watch, _strings),
     );
   }
 
-  Widget _buildBody(IpQueryPageViewmodel watch) {
+  Widget _buildBody(IpQueryPageViewmodel watch, AllStrings strings) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: ListView(
@@ -52,46 +53,66 @@ class _IpQueryPageState extends ConsumerState<IpQueryPage> {
               prefix_icon: Icon(icons[i]),
               keyboard_type: TextInputType.text,
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
           ],
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           CustomButtonWidgets(
-            text: Text("Sorgula"),
+            text: Text(
+              strings.query,
+            ),
             function: () {
               watch.getDataForIP(controllers, context);
             },
           ),
           if (watch.isLoading)
-            Center(
+            const Center(
               child: CircularProgressIndicator(),
             ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           if (watch.responseData != null)
-            ListTile(
-              leading: Icon(Icons.person),
-              title: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Ülke kodu: ${watch.responseData!['countryCode'] ?? ''}'),
-                  Text('Ülke: ${watch.responseData!['country'] ?? ''}'),
-                  Text('Plaka: ${watch.responseData!['region'] ?? ''}'),
-                  Text('Bölge: ${watch.responseData!['regionName'] ?? ''}'),
-                  Text('Şehir: ${watch.responseData!['city'] ?? ''}'),
-                  Text('Zip: ${watch.responseData!['zip'] ?? ''}'),
-                  Text('Lat: ${watch.responseData!['lat'] ?? ''}'),
-                  Text('Lon: ${watch.responseData!['lon'] ?? ''}'),
-                  Text('Zaman dilimi: ${watch.responseData!['timezone'] ?? ''}'),
-                  Text('ISP: ${watch.responseData!['isp'] ?? ''}'),
-                  Text('Sorgu: ${watch.responseData!['query'] ?? ''}'),
-                ],
+            CustomShowInfoContainerWidgets(
+              widget: ListTile(
+                leading: const Icon(Icons.location_on_outlined),
+                title: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
+                        child: SelectableText(
+                            'Ülke: ${watch.responseData!['country'] ?? ''}',style: style(Colors.red),)),
+                    Center(
+                      child: SelectableText(
+                          'Bölge: ${watch.responseData!['regionName'] ?? ''}',style: style(Colors.green),),
+                    ),
+                    Center(
+                      child: SelectableText(
+                          'Şehir: ${watch.responseData!['city'] ?? ''}',style: style(Colors.blue),),
+                    ),
+                  ],
+                ),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SelectableText(
+                        'Ülke kodu: ${watch.responseData!['countryCode'] ?? ''}'),
+                    SelectableText(
+                        'Plaka: ${watch.responseData!['region'] ?? ''}'),
+                    SelectableText('Zip: ${watch.responseData!['zip'] ?? ''}'),
+                    SelectableText('Lat: ${watch.responseData!['lat'] ?? ''}'),
+                    SelectableText('Lon: ${watch.responseData!['lon'] ?? ''}'),
+                    SelectableText(
+                        'Zaman dilimi: ${watch.responseData!['timezone'] ?? ''}'),
+                    SelectableText('ISP: ${watch.responseData!['isp'] ?? ''}'),
+                    SelectableText(
+                        'Sorgu: ${watch.responseData!['query'] ?? ''}'),
+                  ],
+                ),
               ),
-            ),
-          if (watch.responseData == null)
-            Center(
-              child: Text('Henüz veri yok.'),
             ),
         ],
       ),
     );
+  }
+  TextStyle style(Color color) {
+    return TextStyle(color: color, fontSize: 16, fontWeight: FontWeight.bold);
   }
 }

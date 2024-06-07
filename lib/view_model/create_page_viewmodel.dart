@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:vakanuvis/services/auth_service.dart';
+import 'package:vakanuvis/themes/strings.dart';
 
 class CreatePageViewModel extends ChangeNotifier {
-  AuthService authService = AuthService();
+  final AuthService _authService = AuthService();
+  final AllStrings _strings = AllStrings();
   void goLoginPage(BuildContext context) {
     Navigator.pushReplacementNamed(context, "/loginpage");
     notifyListeners();
@@ -11,34 +13,30 @@ class CreatePageViewModel extends ChangeNotifier {
 
   void checkCreateInfo(BuildContext context, String email, String password, String re_password) async {
     if (email.isEmpty == true) {
-      showSnackBar(context,"Email boş olamaz");
+      _strings.showSnackBar(context,_strings.check_email);
     } else if (password.isEmpty == true) {
-      showSnackBar(context,"Parola boş olamaz");
+      _strings.showSnackBar(context,_strings.check_password);
     }else if (re_password.isEmpty == true) {
-      showSnackBar(context,"Parolayı yeniden gir");
+      _strings.showSnackBar(context,_strings.user_password_retry);
     }  else if (email.isEmpty == true && password.isEmpty == true && re_password.isEmpty == true) {
-      showSnackBar(context,"Email ve Parola boş olamaz");
+      _strings.showSnackBar(context,_strings.enter_info);
     } else if (!password.contains(re_password) || !re_password.contains(password)) {
-      showSnackBar(context,"Parolalar uyuşmuyor");
+      _strings.showSnackBar(context,_strings.dont_match_password);
     }else{
-      authService.createUserWithEmailAndPassword(context,email, password)
+      _strings.showProgressDialog(context);
+      _authService.createUserWithEmailAndPassword(context,email, password)
           .then((status) {
         if (status == "succes") {
+          _strings.hideProgressDialog(context);
           Navigator.pushReplacementNamed(context, "/homepage");
         } else {
-          showSnackBar(context, status);
+          _strings.hideProgressDialog(context);
+          _strings.showSnackBar(context, status);
         }
       });
     }
     notifyListeners();
   }
 
-  void showSnackBar(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      //Snakbar içeriği
-      content: Text(message),
-      //Snakbar gösterim süresi
-      duration: Duration(milliseconds: 2000),
-    ));
-  }
+
 }

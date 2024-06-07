@@ -1,20 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:vakanuvis/themes/strings.dart';
 
 class DrawerQueryElements extends StatelessWidget {
-  const DrawerQueryElements({super.key});
+  DrawerQueryElements({super.key});
+  AllStrings _strings = AllStrings();
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
         children: [
-          DrawerHeader(child: Image.asset("assets/images/dragon_logo.png")),
+          DrawerHeader(child: Column(children: [
+            Image.asset(_strings.logo),
+          ],)),
           //Ana Sayfa
           ListTile(
-            leading: Icon(Icons.home),
-            title: Text("Ana Sayfa"),
-            trailing: Icon(Icons.arrow_right),
+            leading: const Icon(Icons.home),
+            title: Text(_strings.home),
+            trailing: const Icon(Icons.arrow_right),
             onTap: (){
               Navigator.pushNamed(context, "/homepage",arguments: "Ana Sayfa");
             },
@@ -22,9 +26,9 @@ class DrawerQueryElements extends StatelessWidget {
 
           //Full Sorgu
           ListTile(
-            leading: Icon(Icons.person),
-            title: Text("Full Sorgu"),
-            trailing: Icon(Icons.arrow_right),
+            leading: const Icon(Icons.person),
+            title: Text(_strings.full_query),
+            trailing: const Icon(Icons.arrow_right),
             onTap: (){
               Navigator.pushNamed(context, "/full_page",arguments: "Full Sorgu");
             },
@@ -32,7 +36,7 @@ class DrawerQueryElements extends StatelessWidget {
           //Kişi Sorgu
           ListTile(
             leading: Icon(Icons.person),
-            title: Text("Kişi Sorgu"),
+            title: Text(_strings.person_query),
             trailing: Icon(Icons.arrow_right),
             onTap: (){
               Navigator.pushNamed(context, "/person_page",arguments: "Kişi Sorgu");
@@ -41,7 +45,7 @@ class DrawerQueryElements extends StatelessWidget {
           //Aile Sorgu
           ListTile(
             leading: Icon(Icons.family_restroom),
-            title: Text("Aile Sorgu"),
+            title: Text(_strings.family_query),
             trailing: Icon(Icons.arrow_right),
             onTap: (){
               Navigator.pushNamed(context, "/family_page",arguments: "Aile Sorgu");
@@ -50,7 +54,7 @@ class DrawerQueryElements extends StatelessWidget {
           //Adres Sorgu
           ListTile(
             leading: Icon(Icons.location_on),
-            title: Text("Adres Sorgu"),
+            title: Text(_strings.address_query),
             trailing: Icon(Icons.arrow_right),
             onTap: (){
               Navigator.pushNamed(context, "/address_page",arguments: "Adres Sorgu");
@@ -59,7 +63,7 @@ class DrawerQueryElements extends StatelessWidget {
           //Telefon Sorgu
           ListTile(
             leading: Icon(Icons.phone_android),
-            title: Text("Telefon Sorgu"),
+            title: Text(_strings.phone_query),
             trailing: Icon(Icons.arrow_right),
             onTap: (){
               Navigator.pushNamed(context, "/phone_page",arguments: "Telefon Sorgu");
@@ -68,7 +72,7 @@ class DrawerQueryElements extends StatelessWidget {
           //Okul Sorgu
           ListTile(
             leading: Icon(Icons.school_outlined),
-            title: Text("Okul Sorgu"),
+            title: Text(_strings.school_query),
             trailing: Icon(Icons.arrow_right),
             onTap: (){
               Navigator.pushNamed(context, "/school_page",arguments: "Okul Sorgu");
@@ -77,7 +81,7 @@ class DrawerQueryElements extends StatelessWidget {
           //Okul Sorgu
           ListTile(
             leading: Icon(Icons.food_bank),
-            title: Text("İban Sorgu"),
+            title: Text(_strings.iban_query),
             trailing: Icon(Icons.arrow_right),
             onTap: (){
               Navigator.pushNamed(context, "/iban_page",arguments: "İban Sorgu");
@@ -86,7 +90,7 @@ class DrawerQueryElements extends StatelessWidget {
           //İp Sorgu
           ListTile(
             leading: Icon(Icons.network_check),
-            title: Text("İp Sorgu"),
+            title: Text(_strings.ip_query),
             trailing: Icon(Icons.arrow_right),
             onTap: (){
               Navigator.pushNamed(context, "/ip_page",arguments: "İp Sorgu");

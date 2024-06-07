@@ -2,13 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:vakanuvis/services/auth_service.dart';
+import 'package:vakanuvis/themes/strings.dart';
 
 class HomePageViewmodel extends ChangeNotifier {
 
-  AuthService authService = AuthService();
-  FirebaseAuth _auth = FirebaseAuth.instance;
-
-
+  final AuthService _authService = AuthService();
+  final AllStrings _strings = AllStrings();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   void showAlertDialog(BuildContext context) {
 
@@ -19,7 +19,7 @@ class HomePageViewmodel extends ChangeNotifier {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Center(child: Text("İşlem seç")),
+          title: Center(child: Text(_strings.choose_option)),
           content: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -27,9 +27,15 @@ class HomePageViewmodel extends ChangeNotifier {
               ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context);
-                  authService.logoutUser(context);
+                  _authService.logoutUser(context);
                 },
-                child: Text("Çıkış yap"),
+                child: Text(_strings.exit),
+                style:  ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0), // Rounded corners
+                    side: BorderSide(color: Colors.blue, width: 2.0), // Border color and width
+                  ),
+                ),
               ),
               Visibility(
                 visible: isAdmin,
@@ -40,7 +46,13 @@ class HomePageViewmodel extends ChangeNotifier {
                       Navigator.pushNamed(context, "/adminpage");
                     }
                   },
-                  child: Text("Admin"),
+                  child: Text(_strings.admin),
+                  style:  ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0), // Rounded corners
+                      side: BorderSide(color: Colors.blue, width: 2.0), // Border color and width
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -50,7 +62,7 @@ class HomePageViewmodel extends ChangeNotifier {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text("İptal"),
+              child: Text(_strings.cancel),
             ),
           ],
         );

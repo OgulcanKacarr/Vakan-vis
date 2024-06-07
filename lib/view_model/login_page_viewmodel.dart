@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:vakanuvis/services/auth_service.dart';
+import 'package:vakanuvis/themes/strings.dart';
 
 class LoginPageViewModel extends ChangeNotifier {
-  AuthService authService = AuthService();
+  final AuthService _authService = AuthService();
+  final AllStrings _strings = AllStrings();
 
   void goCreatePage(BuildContext context) {
     Navigator.pushReplacementNamed(context, "/createpage");
@@ -11,19 +13,22 @@ class LoginPageViewModel extends ChangeNotifier {
 
   void checkLoginInfo(BuildContext context, String email, String password) async {
     if (email.isEmpty == true) {
-      showSnackBar(context, "Email boş olamaz");
+      _strings.showSnackBar(context, _strings.check_email);
     } else if (password.isEmpty == true) {
-      showSnackBar(context, "Parola boş olamaz");
+      _strings.showSnackBar(context, _strings.check_password);
     } else if (email.isEmpty == true && password.isEmpty == true) {
-      showSnackBar(context, "Email ve Parola boş olamaz");
+      _strings.showSnackBar(context, _strings.enter_info);
     } else {
-      authService
+      _strings.showProgressDialog(context);
+      _authService
           .loginUserWithEmailAndPassword(context, email, password)
           .then((status) {
         if (status == "succes") {
+          _strings.hideProgressDialog(context);
           Navigator.pushReplacementNamed(context, "/homepage");
         } else {
-          showSnackBar(context, status);
+          _strings.hideProgressDialog(context);
+          _strings.showSnackBar(context, status);
         }
       });
     }
@@ -31,10 +36,5 @@ class LoginPageViewModel extends ChangeNotifier {
   }
 
 
-  void showSnackBar(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(message),
-      duration: Duration(milliseconds: 2000),
-    ));
-  }
+
 }
