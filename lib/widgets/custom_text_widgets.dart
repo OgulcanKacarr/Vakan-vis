@@ -19,9 +19,12 @@ class CustomTextWidgets extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final textColor = theme.brightness == Brightness.dark ? Colors.white : Colors.black;
+
     return Text(text, style: TextStyle(
       fontSize: text_size,
-      color: text_color,
+      color: textColor,
       fontWeight: font_weight,
     ),
     );

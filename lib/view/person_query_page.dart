@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:vakanuvis/themes/strings.dart';
 import 'package:vakanuvis/view_model/person_query_page_viewmodel.dart';
 import 'package:vakanuvis/widgets/custom_appbar_widgets.dart';
@@ -12,7 +16,7 @@ import '../services/firestore_service.dart';
 final riverpod = ChangeNotifierProvider((ref) => PersonQueryPageViewmodel());
 
 class PersonQueryPage extends ConsumerStatefulWidget {
-  const PersonQueryPage({super.key});
+  const PersonQueryPage({Key? key}) : super(key: key);
 
   @override
   ConsumerState<PersonQueryPage> createState() => _PersonQueryPageState();
@@ -59,7 +63,8 @@ class _PersonQueryPageState extends ConsumerState<PersonQueryPage> {
     );
   }
 
-  Widget _buildBody(PersonQueryPageViewmodel watch, AllStrings strings, FirestoreService firestore) {
+  Widget _buildBody(PersonQueryPageViewmodel watch, AllStrings strings,
+      FirestoreService firestore) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: ListView(
@@ -85,6 +90,7 @@ class _PersonQueryPageState extends ConsumerState<PersonQueryPage> {
               child: CircularProgressIndicator(),
             ),
           const SizedBox(height: 20),
+
           if (watch.responseData.isNotEmpty)
             CustomShowInfoContainerWidgets(
               widget: ListView.builder(
@@ -92,36 +98,96 @@ class _PersonQueryPageState extends ConsumerState<PersonQueryPage> {
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: watch.responseData!.length,
                 itemBuilder: (context, index) {
-                  var data = watch.responseData![index];
-                  firestore.upload(data['TC'], data['ADI'], data['SOYADI']);
+                  var data = watch.responseData[index];
                   return ListTile(
-                    leading: const Icon(Icons.person),
-                    title: Column(crossAxisAlignment: CrossAxisAlignment.start,children: [
-                      Center(
-                        child: SelectableText(
-                          '${data['ADI'] ?? ''}',
-                          style: style(Colors.red),
+                    title: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Center(
+                          child: SelectableText(
+                            '${data['ADI'] ?? ''}',
+                            style: style(Colors.red),
+                          ),
                         ),
-                      ),
-                      Center(
-                        child: SelectableText(
-                          '${data['SOYADI'] ?? ''}',
-                          style: style(Colors.green),
+                        Center(
+                          child: SelectableText(
+                            '${data['SOYADI'] ?? ''}',
+                            style: style(Colors.green),
+                          ),
                         ),
-                      ),
-                    ],),
+                      ],
+                    ),
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Center(child: SelectableText('${data['NUFUSIL'] ?? ''}', style: style(Colors.blue),)),
+                        Center(
+                          child: SelectableText(
+                            '${data['NUFUSIL'] ?? ''}',
+                            style: style(Colors.blue),
+                          ),
+                        ),
                         SelectableText('TC: ${data['TC'] ?? ''}'),
-                        SelectableText('DOĞUM TARİHİ: ${data['DOGUMTARIHI'] ?? ''}'),
-                        SelectableText('NUFUS İLÇE: ${data['NUFUSILCE'] ?? ''}'),
+                        SelectableText(
+                            'DOĞUM TARİHİ: ${data['DOGUMTARIHI'] ?? ''}'),
+                        SelectableText(
+                            'NUFUS İLÇE: ${data['NUFUSILCE'] ?? ''}'),
                         SelectableText('ANNE ADI: ${data['ANNEADI'] ?? ''}'),
                         SelectableText('ANNE TC: ${data['ANNETC'] ?? ''}'),
                         SelectableText('BABA ADI: ${data['BABAADI'] ?? ''}'),
                         SelectableText('BABA TC: ${data['BABATC'] ?? ''}'),
                         SelectableText('UYRUK: ${data['UYRUK'] ?? ''}'),
+
+                        Padding(
+                          padding: EdgeInsets.only(top: 10),
+                          child: Container(
+                            height: 400,
+                            child: FutureBuilder<LatLng?>(
+                              future: PersonQueryPageViewmodel.getAddressCoordinates(data['NUFUSIL'],data["NUFUSILCE"]),
+                              builder: (BuildContext context, AsyncSnapshot<LatLng?> snapshot) {
+                                if(snapshot.connectionState == ConnectionState.waiting){
+                                  return const Center(child: CircularProgressIndicator());
+                                }else if(snapshot.hasData){
+                                  LatLng? cord = snapshot.data;
+                                  print("lat: ${cord?.latitude}");
+                                  print("lon: ${cord?.longitude}");
+                                  if(cord != null){
+                                    return FlutterMap(
+                                      options: MapOptions(
+                                        initialCenter: LatLng(cord.latitude,cord.longitude),
+                                        initialZoom: 10.2,
+                                      ),
+                                      children: [
+                                        TileLayer(
+                                          urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                                          userAgentPackageName: 'com.ogulcankacar.app',
+                                        ),
+                                        RichAttributionWidget(
+                                          attributions: [
+                                            TextSourceAttribution(
+                                              'OpenStreetMap contributors',
+                                              onTap: () => (Uri.parse('https://openstreetmap.org/copyright')),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    );
+                                  }else{
+                                    print("data gelmedi}");
+                                    return Scaffold();
+                                  }
+
+                                }else if(snapshot.hasError){
+                                  // Hata durumunu burada ele alabilirsiniz
+                                  print("Hata: ${snapshot.error}");
+                                  return Text("Bir hata oluştu. Lütfen tekrar deneyin.");
+                                }else{
+                                  return Scaffold();
+                                }
+
+                              },
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   );

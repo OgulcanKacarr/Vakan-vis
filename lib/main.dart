@@ -14,6 +14,7 @@ import 'package:vakanuvis/view/login_page.dart';
 import 'package:vakanuvis/view/person_query_page.dart';
 import 'package:vakanuvis/view/phone_query_page.dart';
 import 'package:vakanuvis/view/school_no_query_page.dart';
+import 'package:vakanuvis/view/school_no_query_page2.dart';
 import 'package:vakanuvis/view/splash_page.dart';
 
 import 'firebase_options.dart';
@@ -23,6 +24,7 @@ Future<void> main() async {
   if (Firebase.apps.isEmpty) {
     try {
       await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+      print("Firebase initialization succes");
     } catch (e) {
       print("Firebase initialization error: $e");
     }
@@ -53,6 +55,7 @@ class MyApp extends StatelessWidget {
         "/phone_page": (context) =>  PhonesQueryPage(),
         "/address_page": (context) =>  AddressQueryPage(),
         "/school_page": (context) =>  SchoolNoQueryPage(),
+        "/school_page_2": (context) =>  SchoolNoQueryPage2(),
         "/iban_page": (context) =>  IbanQueryPage(),
         "/ip_page": (context) =>  IpQueryPage(),
       },

@@ -33,7 +33,7 @@ class HomePageViewmodel extends ChangeNotifier {
                 style:  ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0), // Rounded corners
-                    side: BorderSide(color: Colors.blue, width: 2.0), // Border color and width
+                    side: BorderSide(color: Colors.green, width: 2.0), // Border color and width
                   ),
                 ),
               ),

@@ -25,12 +25,13 @@ class AllStrings{
     String exit = "Çıkış yap";
     String cancel = "İptal";
     String home = "Ana Sayfa";
-    String full_query = "Full Sorgu";
+    String full_query = "Rapor Sorgu";
     String person_query = "Kişi Sorgu";
     String family_query = "Aile Sorgu";
     String address_query = "Adres Sorgu";
     String phone_query = "Telefon Sorgu";
     String school_query = "Okul Sorgu";
+    String school_query_2 = "Okul Sorgu2";
     String iban_query = "İban Sorgu";
     String ip_query = "İp Sorgu";
     String long_query = "Sorgu uzun sürebilir.";
@@ -41,6 +42,7 @@ class AllStrings{
     String empty_value = "Sonuç bulunamadı :(";
     String not_use_zero = "Başında 0 olmasın.";
     String not_use_space = "İbandaki boşlukları silin.";
+    String not_found_query = "Sorgu bulunamadı.";
 
     //Images path
     String logo = "assets/images/dragon_logo.png";

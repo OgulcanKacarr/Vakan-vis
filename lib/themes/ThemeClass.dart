@@ -11,11 +11,12 @@ class ThemeClass {
     ),
     textTheme: TextTheme(
       bodyMedium: TextStyle(color: Colors.white),
-      bodyLarge: TextStyle(color: Colors.white70),
+      bodyLarge: TextStyle(color: Colors.white),
     ),
     appBarTheme: AppBarTheme(
       color: Colors.black,
     ),
+    dividerColor: Colors.white,
   );
 
   static final ThemeData lightTheme = ThemeData.light().copyWith(
@@ -26,5 +27,6 @@ class ThemeClass {
       buttonColor: Colors.blue, // Light theme button color
       textTheme: ButtonTextTheme.primary,
     ),
+    dividerColor: Colors.black,
   );
 }

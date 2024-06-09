@@ -29,6 +29,7 @@ class FullQueryPageViewmodel extends ChangeNotifier {
             default:
               break;
           }
+          controllers[i].text = "";
         }
 
       }

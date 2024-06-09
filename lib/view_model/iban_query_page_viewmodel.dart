@@ -34,6 +34,7 @@ class IbanQueryPageViewmodel extends ChangeNotifier {
               break;
           }
         }
+        controllers[i].text = "";
       }
       if(isEmpty){
         _strings.showSnackBar(context, _strings.check_iban);

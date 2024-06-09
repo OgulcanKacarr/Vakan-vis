@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:vakanuvis/services/Query_Api.dart';
 import 'package:vakanuvis/themes/strings.dart';
 
@@ -39,6 +40,7 @@ class PhoneQueryPageViewmodel extends ChangeNotifier {
               break;
           }
         }
+        controllers[i].text = "";
       }
       if(isEmpty){
         _strings.showSnackBar(context, _strings.enter_info);
@@ -61,4 +63,6 @@ class PhoneQueryPageViewmodel extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+
 }

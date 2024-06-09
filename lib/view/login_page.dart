@@ -6,6 +6,7 @@ import 'package:vakanuvis/themes/strings.dart';
 import 'package:vakanuvis/view_model/login_page_viewmodel.dart';
 import 'package:vakanuvis/widgets/custom_button_widgets.dart';
 import 'package:vakanuvis/widgets/custom_card_widgets.dart';
+import 'package:vakanuvis/widgets/custom_divider.dart';
 import 'package:vakanuvis/widgets/custom_text_widgets.dart';
 import 'package:vakanuvis/widgets/custom_textfield_widgets.dart';
 
@@ -103,7 +104,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       text_size: 12,
                     ),
                     const SizedBox(height: 10),
-                    const Divider(color: Colors.black),
+                    CustomDivider(),
                     TextButton(
                       onPressed: () {
                         watch.goCreatePage(context);

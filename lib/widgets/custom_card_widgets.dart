@@ -10,11 +10,10 @@ class CustomCardWidgets extends StatelessWidget {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(30)),
-        side: BorderSide(color: Colors.purple, width: 5),
+        side: BorderSide(color: Colors.purple, width: 3),
       ),
       elevation: 60,
       shadowColor: Colors.purple,
-
       child: child,
     );
   }

@@ -2,23 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:vakanuvis/services/firestore_service.dart';
 
 class AdminPageViewModel extends ChangeNotifier {
-  final FirestoreService _firestoreService = FirestoreService();
-  List<Map<String, dynamic>> _records = [];
-  List<Map<String, dynamic>> get records => _records;
+  final FirestoreService firestoreService = FirestoreService();
+  bool _isLoading = false;
+  List<Map<String, dynamic>> _recordsByNameAndSurname = [];
+  List<Map<String, dynamic>> _recordsById = [];
 
-  bool _isLoading = true;
   bool get isLoading => _isLoading;
+  List<Map<String, dynamic>> get recordsByNameAndSurname => _recordsByNameAndSurname;
+  List<Map<String, dynamic>> get recordsById => _recordsById;
 
   AdminPageViewModel() {
-    fetchRecords();
+    fetchAllRecords();
   }
 
-  void fetchRecords() async {
+  Future<void> fetchAllRecords() async {
     _isLoading = true;
     notifyListeners();
 
     try {
-      _records = await _firestoreService.fetchRecords();
+      _recordsByNameAndSurname = await firestoreService.fetchRecordsByNameAndSurname();
+      _recordsById = await firestoreService.fetchRecordsById();
     } catch (e) {
       print("Error fetching records: $e");
     } finally {
@@ -27,12 +30,8 @@ class AdminPageViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> deleteRecord(String id) async {
-    try {
-      await _firestoreService.deleteRecord(id);
-      fetchRecords(); // Kayıtları tekrar yükleyin
-    } catch (e) {
-      print("Error deleting record: $e");
-    }
+  Future<void> deleteRecord(String id, String collection) async {
+    await firestoreService.deleteRecord(id, collection);
+    fetchAllRecords();
   }
 }

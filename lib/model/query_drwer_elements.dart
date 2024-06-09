@@ -30,7 +30,7 @@ class DrawerQueryElements extends StatelessWidget {
             title: Text(_strings.full_query),
             trailing: const Icon(Icons.arrow_right),
             onTap: (){
-              Navigator.pushNamed(context, "/full_page",arguments: "Full Sorgu");
+              Navigator.pushNamed(context, "/full_page",arguments: "Rapor Sorgu");
             },
           ),
           //Kişi Sorgu
@@ -78,9 +78,17 @@ class DrawerQueryElements extends StatelessWidget {
               Navigator.pushNamed(context, "/school_page",arguments: "Okul Sorgu");
             },
           ),
+          ListTile(
+            leading: Icon(Icons.school_outlined),
+            title: Text(_strings.school_query_2),
+            trailing: Icon(Icons.arrow_right),
+            onTap: (){
+              Navigator.pushNamed(context, "/school_page_2",arguments: "Okul Sorgu2");
+            },
+          ),
           //Okul Sorgu
           ListTile(
-            leading: Icon(Icons.food_bank),
+            leading: Icon(Icons.food_bank_sharp),
             title: Text(_strings.iban_query),
             trailing: Icon(Icons.arrow_right),
             onTap: (){
@@ -89,7 +97,7 @@ class DrawerQueryElements extends StatelessWidget {
           ),
           //İp Sorgu
           ListTile(
-            leading: Icon(Icons.network_check),
+            leading: Icon(Icons.network_check_rounded),
             title: Text(_strings.ip_query),
             trailing: Icon(Icons.arrow_right),
             onTap: (){

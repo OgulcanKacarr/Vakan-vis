@@ -24,7 +24,6 @@ class _HomePageState extends ConsumerState<HomePage> {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   TextEditingController _controller = TextEditingController();
 
-
   @override
   void initState() {
     super.initState();

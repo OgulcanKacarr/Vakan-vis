@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vakanuvis/view_model/create_page_viewmodel.dart';
+import 'package:vakanuvis/widgets/custom_divider.dart';
 
 import '../themes/strings.dart';
 import '../widgets/custom_button_widgets.dart';
@@ -104,7 +105,7 @@ class _CreatePageState extends ConsumerState<CreatePage> {
                       text_size: 12,
                     ),
                     const SizedBox(height: 10),
-                    const Divider(color: Colors.black),
+                    CustomDivider(),
                     TextButton(
                       onPressed: () {
                         watch.goLoginPage(context);
